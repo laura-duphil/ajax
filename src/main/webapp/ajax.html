@@ -10,17 +10,14 @@
 		<script>
 			$(document).ready(// Exécuté à la fin du chargement de la page
 				function () {
-					// On remplit le <select> avec les états existants
-					fillStateSelector();
-					// Quand on sélectionnne un nouvel état, on affiche les clients de cet état
-					$("#state").change(showCustomersInState);
+					showCodes();
 				}
 			);
 			
-			function fillStateSelector() {
+			function showCodes() {
 				// On fait un appel AJAX pour chercher les états existants
 				$.ajax({
-					url: "statesInJSON",
+					url: "TousCodes",
 					dataType: "json",
 					error: showError,
 					success: // La fonction qui traite les résultats

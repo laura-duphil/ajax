@@ -37,10 +37,11 @@ public class SupprimerCode extends HttpServlet {
 		throws ServletException, IOException {
 		// Créér le DAO avec sa source de données
 		DAO dao = new DAO(DataSourceFactory.getDataSource());
+                String code = request.getParameter("code");
 		// Properties est une Map<clé, valeur> pratique pour générer du JSON
 		Properties resultat = new Properties();
 		try {
-			resultat.put("records", dao.deleteDiscountCode(""));
+			resultat.put("records", dao.deleteDiscountCode(code));
 		} catch (SQLException ex) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			resultat.put("records", Collections.EMPTY_LIST);
