@@ -34,31 +34,31 @@ public class SupprimerCode extends HttpServlet {
 	 * @throws IOException if an I/O error occurs
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
-		// Créér le DAO avec sa source de données
-		DAO dao = new DAO(DataSourceFactory.getDataSource());
-                String code = request.getParameter("code");
-		// Properties est une Map<clé, valeur> pratique pour générer du JSON
-		Properties resultat = new Properties();
-		try {
-			resultat.put("records", dao.deleteDiscountCode(code));
-		} catch (SQLException ex) {
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			resultat.put("records", Collections.EMPTY_LIST);
-			resultat.put("message", ex.getMessage());
-		}
+            throws ServletException, IOException {
+        // Créér le DAO avec sa source de données
+        DAO dao = new DAO(DataSourceFactory.getDataSource());
+        String code = request.getParameter("code");
+        // Properties est une Map<clé, valeur> pratique pour générer du JSON
+        Properties resultat = new Properties();
+        try {
+            resultat.put("records", dao.deleteDiscountCode(code));
+        } catch (SQLException ex) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            resultat.put("records", Collections.EMPTY_LIST);
+            resultat.put("message", ex.getMessage());
+        }
 
-		try (PrintWriter out = response.getWriter()) {
-			// On spécifie que la servlet va générer du JSON
-			response.setContentType("application/json;charset=UTF-8");
-			// Générer du JSON
-			// Gson gson = new Gson();
-			// setPrettyPrinting pour que le JSON généré soit plus lisible
-			Gson gson = new GsonBuilder().setPrettyPrinting().create();
-			String gsonData = gson.toJson(resultat);
-			out.println(gsonData);
-		}
-	}
+        try (PrintWriter out = response.getWriter()) {
+            // On spécifie que la servlet va générer du JSON
+            response.setContentType("application/json;charset=UTF-8");
+            // Générer du JSON
+            // Gson gson = new Gson();
+            // setPrettyPrinting pour que le JSON généré soit plus lisible
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String gsonData = gson.toJson(resultat);
+            out.println(gsonData);
+        }
+    }
 
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 	/**
